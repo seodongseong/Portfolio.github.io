@@ -1,0 +1,150 @@
+/* layout.css */
+html, body { height:100%; margin:0; padding:0; }
+
+/* 스냅 컨테이너: 실제 스크롤이 여기서 발생 */
+.snap-container {
+  height: 100vh;
+  height: 100dvh; /* 최신 모바일 뷰포트 지원 */
+  overflow-y: auto;
+  scroll-snap-type: y mandatory; /* 섹션 스냅 기능 추가 */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 각 섹션은 1뷰포트 */
+.section, .hero {
+  min-height: 100vh;
+  min-height: 100dvh; /* 최신 모바일 뷰포트 지원 */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display:flex;
+  align-items:center;
+  justify-content: center; /* hero 섹션 외에도 중앙 정렬을 기본으로 설정 */
+  padding-top:64px; /* fixed header 공간 확보 */
+}
+
+/* 내부 너비 공통 */
+.section__inner { max-width:960px; width: 100%; margin:0 auto; padding: 24px; }
+
+/* hero 명함 */
+.hero { 
+    background: var(--color-bg-hero); 
+    overflow: hidden; /* 자식 요소의 애니메이션 때문에 잠시 오버플로우 숨김 */
+}
+
+/* ----------------------------------------------- */
+/* [추가] Hello 섹션 (Hero) 애니메이션 */
+/* ----------------------------------------------- */
+
+/* Card 등장 애니메이션: 시작 시 살짝 위에서 내려오면서 선 등장 */
+@keyframes card-intro {
+    0% { transform: translateY(-30px); opacity: 0; }
+    30% { transform: translateY(-30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Name 텍스트 페이드인 애니메이션 */
+@keyframes name-fade-in {
+    0% { opacity: 0; transform: translateY(10px); }
+    50% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Role 텍스트 페이드인 애니메이션 (이름보다 살짝 늦게) */
+@keyframes role-fade-in {
+    0% { opacity: 0; transform: translateY(20px); }
+    60% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Card의 선 애니메이션 (위/아래에서 등장) */
+@keyframes line-draw-top {
+    0% { transform: scaleX(0); opacity: 0; }
+    20% { transform: scaleX(0); opacity: 0; }
+    70% { transform: scaleX(1.1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 1; }
+}
+@keyframes line-draw-bottom {
+    0% { transform: scaleX(0); opacity: 0; }
+    20% { transform: scaleX(0); opacity: 0; }
+    70% { transform: scaleX(1.1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 1; }
+}
+
+
+.card {
+    border-top: 1px solid transparent; /* 초기 상태는 투명 */
+    border-bottom: 1px solid transparent; /* 초기 상태는 투명 */
+    padding: 60px 110px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background: transparent;
+    width: auto;
+    opacity: 0; /* 초기 상태 숨김 */
+    animation: card-intro 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* 카드가 부드럽게 등장 */
+    position: relative; /* 자식 선들을 위해 */
+    isolation: isolate; /* z-index를 위해 */
+}
+
+/* 가상 요소를 이용해 선 애니메이션 구현 */
+.card::before,
+.card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--color-accent-gold);
+    opacity: 0; /* 초기 상태 숨김 */
+    transform-origin: center;
+    pointer-events: none;
+}
+.card::before {
+    top: 0;
+    animation: line-draw-top 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards; /* 0.3초 뒤에 시작 */
+}
+.card::after {
+    bottom: 0;
+    animation: line-draw-bottom 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards; /* 0.3초 뒤에 시작 */
+}
+
+
+.name {
+    font-family: var(--font-serif); 
+    font-size: 60px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #111;
+    opacity: 0; /* 초기 상태 숨김 */
+    animation: name-fade-in 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards; /* 0.5초 뒤에 시작 */
+    position: relative; /* z-index를 위해 */
+    z-index: 2; /* 텍스트가 선 위에 보이도록 */
+}
+
+.role {
+    margin-top: 18px;
+    font-family: var(--font-main);
+    font-size: 15px;
+    color: #666;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0; /* 초기 상태 숨김 */
+    animation: role-fade-in 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s forwards; /* 0.7초 뒤에 시작 */
+    position: relative; /* z-index를 위해 */
+    z-index: 2; /* 텍스트가 선 위에 보이도록 */
+}
+
+/* ----------------------------------------------- */
+
+
+.footer { border-top:1px solid var(--color-border-soft); text-align:center; font-size:12px; color:#888; padding:28px 0; }
+
+@media (max-width: 768px) {
+    .card { padding: 40px 20px; width: 90%; }
+    .name { font-size: 36px; letter-spacing: 0.05em; }
+    .role { font-size: 12px; }
+}

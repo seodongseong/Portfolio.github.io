@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO DONGSEONG | Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <meta property="og:title" content="서동성 포트폴리오" />
+    <meta property="og:description" content="Fullstack & AI Platform Developer 서동성의 포트폴리오입니다." />
+    <meta property="og:image" content="assets/images/profile.jpg" />
+
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/sections.css" />
+</head>
+
+<body>
+    <div class="header-wrap">
+        <header class="site-header">
+            <div class="container header-inner">
+                <div class="logo">SEO DONGSEONG</div>
+                <nav class="site-nav">
+                    <a href="#top" data-target="top" class="nav-link">Hello</a>
+                    <a href="#about" data-target="about" class="nav-link">About</a>
+                    <a href="#profile" data-target="profile" class="nav-link">Profile</a>
+                    <a href="#skills" data-target="skills" class="nav-link">Skills</a>
+                    <a href="#projects" data-target="projects" class="nav-link">Projects</a>
+                    <a href="#contact" data-target="contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <div class="snap-container">
+        <header class="hero" id="top">
+            <div class="card">
+                <div class="name">SEO DONGSEONG</div>
+                <div class="role">FULLSTACK · AI PLATFORM · DEVOPS</div>
+            </div>
+        </header>
+
+        <section class="section section--light" id="about">
+            <div class="section__inner">
+                <h2 class="section__title">About</h2>
+                <p class="section__subtitle">React와 Spring Boot를 중심으로, AI·데이터 경진대회를 서비스 수준으로 구현해 보고 있는 풀스택 지향 개발자입니다.
+                </p>
+                <div class="about">
+                    <div class="about__text">
+                        <p>단순한 CRUD가 아니라, 실제 사용자가 데이터셋을 내려받고, 모델을 학습하고, 예측 결과를 제출하면 자동으로 채점되는 <strong>Hangle
+                                Project</strong>를 설계·구현하며 <strong>Frontend · Backend · DevOps · ML</strong>이 연결되는 전체 흐름을
+                            경험하고 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="profile">
+            <div class="section__inner profile-grid">
+                <div class="profile-photo">
+                    <img src="assets/images/profile.jpg" alt="서동성 프로필" />
+                </div>
+                <div class="profile-info">
+                    <h2 class="section__title">Profile</h2>
+                    <p class="section__subtitle">개인 정보와 간단 소개</p>
+                    <ul class="profile-list">
+                        <li><strong>이름</strong> 서동성</li>
+                        <li><strong>직무</strong> Frontend / Backend / MLOps</li>
+                        <li><strong>지역</strong> 대구광역시 중구 남산동</li>
+                        <li><strong>이메일</strong> mygodiscat@naver.com</li>
+                        <li><strong>GitHub</strong> <a href="https://github.com/seodongseong"
+                                target="_blank">github.com/seodongseong</a></li>
+                    </ul>
+                    <p class="profile-desc">서비스의 전 구간(프론트→백→인프라→데이터)을 설계하는 것을 선호합니다. 현재 Hangle 프로젝트로 경진대회 플랫폼을 개발 중이며,
+                        인증/채점/배포 파이프라인을 구성했습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--light" id="skills">
+            <div class="section__inner">
+                <h2 class="section__title">Skills</h2>
+                <p class="section__subtitle">프론트, 백엔드, 인프라, ML을 한 서비스 안에서 이어 붙여 보는 것을 좋아합니다.</p>
+                <!-- 기존 3단 컬럼 구조를 플랫한 육각형 그리드 구조로 변경 -->
+                <div class="skills-grid-wrap">
+                    <!-- 스킬 카테고리 (데스크탑에서만 참고용으로 표시) -->
+                    <div class="skills__category">
+                        <h3 class="skills__title">Frontend</h3>
+                        <h3 class="skills__title">Backend & DevOps</h3>
+                        <h3 class="skills__title">ML & Data</h3>
+                    </div>
+
+                    <!-- 모든 스킬을 육각형 그리드 컨테이너에 배치 -->
+                    <ul class="skills-hexagon-list">
+                        <!-- Frontend -->
+                        <li class="hexagon-item frontend"><span>React 19</span></li>
+                        <li class="hexagon-item frontend"><span>React Router v7</span></li>
+                        <li class="hexagon-item frontend"><span>Axios</span></li>
+                        <li class="hexagon-item frontend"><span>SCSS / Tokens</span></li>
+                        <li class="hexagon-item frontend"><span>HTML5 / CSS3</span></li>
+                        
+                        <!-- Backend & DevOps -->
+                        <li class="hexagon-item backend"><span>Spring Boot 3</span></li>
+                        <li class="hexagon-item backend"><span>Java 21</span></li>
+                        <li class="hexagon-item backend"><span>Security (JWT)</span></li>
+                        <li class="hexagon-item backend"><span>JPA / Pagination</span></li>
+                        <li class="hexagon-item devops"><span>AWS EC2</span></li>
+                        <li class="hexagon-item devops"><span>Jenkins / Docker</span></li>
+                        
+                        <!-- ML & Data -->
+                        <li class="hexagon-item ml"><span>Python / Pandas</span></li>
+                        <li class="hexagon-item ml"><span>Scikit-learn</span></li>
+                        <li class="hexagon-item ml"><span>TensorFlow</span></li>
+                        <li class="hexagon-item data"><span>Streamlit</span></li>
+                        <li class="hexagon-item data"><span>Feature Eng.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <div class="section__inner">
+                <h2 class="section__title">Projects</h2>
+                <p class="section__subtitle">서비스로 동작하는지와 확장 가능성을 함께 고민한 프로젝트들</p>
+                <div class="projects">
+                    <article class="project-card">
+                        <h3 class="project-card__title">Hangle Project – AI 경진대회 플랫폼</h3>
+                        <p class="project-card__summary">React + Spring Boot 기반으로 로그인, 대회 등록, CSV 제출 및 자동 채점까지 구현한 풀스택
+                            서비스.</p>
+                        <p class="project-card__stack"><strong>Stack</strong> React · Spring Boot · MySQL · Redis ·
+                            Docker · Jenkins · AWS</p>
+                        <div class="project-links">
+                            <a href="https://github.com/Doidoria/Hangle-PROJECT.git" target="_blank"
+                                class="btn-link">View GitHub Repo</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--light" id="contact">
+            <div class="section__inner">
+                <h2 class="section__title">Contact</h2>
+                <p class="section__subtitle">데이터와 서비스의 흐름을 함께 설계하고 싶은 팀을 찾고 있습니다.</p>
+                <div class="contact">
+                    <p>이메일: <a href="mailto:mygodiscat@naver.com">mygodiscat@naver.com</a></p>
+                    <p>GitHub: <a href="https://github.com/seodongseong" target="_blank">github.com/seodongseong</a></p>
+                    <p>Notion: <a href="https://www.notion.so/299efe5eb4ed8032a85bcabf2a25fada?source=copy_link"
+                                target="_blank">서동성 이력서 & 포트폴리오</a></p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer__inner">
+                <p>© 2025 SEO DONGSEONG. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
