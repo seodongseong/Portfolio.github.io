@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fullstack & AI Platform Developer 서동성의 포트폴리오입니다.">
     <title>SEO DONGSEONG | Portfolio</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,16 +27,20 @@
         <header class="site-header">
             <div class="container header-inner">
                 <div class="logo">SEO DONGSEONG</div>
-                <nav class="site-nav">
-                    <a href="#top" data-target="top" class="nav-link">Hello</a>
-                    <a href="#about" data-target="about" class="nav-link">About</a>
-                    <a href="#profile" data-target="profile" class="nav-link">Profile</a>
-                    <a href="#skills" data-target="skills" class="nav-link">Skills</a>
-                    <a href="#projects" data-target="projects" class="nav-link">Projects</a>
-                    <a href="#contact" data-target="contact" class="nav-link">Contact</a>
+                <nav class="site-nav" aria-label="메인 네비게이션">
+                    <a href="#top" data-target="top" class="nav-link" aria-label="홈으로 이동">Hello</a>
+                    <a href="#about" data-target="about" class="nav-link" aria-label="소개 섹션으로 이동">About</a>
+                    <a href="#profile" data-target="profile" class="nav-link" aria-label="프로필 섹션으로 이동">Profile</a>
+                    <a href="#skills" data-target="skills" class="nav-link" aria-label="기술 스택 섹션으로 이동">Skills</a>
+                    <a href="#projects" data-target="projects" class="nav-link" aria-label="프로젝트 섹션으로 이동">Projects</a>
+                    <a href="#contact" data-target="contact" class="nav-link" aria-label="연락처 섹션으로 이동">Contact</a>
                 </nav>
             </div>
         </header>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true">
+        <div class="scroll-indicator__bar"></div>
     </div>
 
     <div class="snap-container">
@@ -47,15 +52,30 @@
         </header>
 
         <section class="section section--light" id="about">
-            <div class="section__inner">
+            <div class="section__inner about-section">
                 <h2 class="section__title">About</h2>
-                <p class="section__subtitle">React와 Spring Boot를 중심으로, AI·데이터 경진대회를 서비스 수준으로 구현해 보고 있는 풀스택 지향 개발자입니다.
-                </p>
-                <div class="about">
-                    <div class="about__text">
-                        <p>단순한 CRUD가 아니라, 실제 사용자가 데이터셋을 내려받고, 모델을 학습하고, 예측 결과를 제출하면 자동으로 채점되는 <strong>Hangle
-                                Project</strong>를 설계·구현하며 <strong>Frontend · Backend · DevOps · ML</strong>이 연결되는 전체 흐름을
-                            경험하고 있습니다.</p>
+                <div class="about-intro">
+                    <p class="about-intro__text">
+                        서비스의 전 구간을 설계하고 구현하는 <strong>풀스택 개발자</strong>입니다.<br>
+                        단순한 CRUD를 넘어, 실제 사용자가 경험하는 <strong>End-to-End 파이프라인</strong>을 구축합니다.
+                    </p>
+                </div>
+                <div class="about-keywords">
+                    <div class="keyword-item">
+                        <span class="keyword-icon">→</span>
+                        <span class="keyword-text">Frontend · Backend · DevOps · ML 전체 흐름 경험</span>
+                    </div>
+                    <div class="keyword-item">
+                        <span class="keyword-icon">→</span>
+                        <span class="keyword-text">React + Spring Boot 기반 현대적 웹 애플리케이션 구축</span>
+                    </div>
+                    <div class="keyword-item">
+                        <span class="keyword-icon">→</span>
+                        <span class="keyword-text">Docker, Jenkins, AWS를 활용한 CI/CD 파이프라인 구성</span>
+                    </div>
+                    <div class="keyword-item">
+                        <span class="keyword-icon">→</span>
+                        <span class="keyword-text">Python 기반 데이터 분석 및 ML 모델 서빙 경험</span>
                     </div>
                 </div>
             </div>
@@ -113,7 +133,6 @@
                                 <img src="assets/icon/CSS3.svg" alt="CSS3 Icon" class="skill-icon" />
                                 <span>CSS3</span>
                             </div>
-                            <div class="skill-card-item" style="visibility: hidden; padding: 0;"></div>
                         </div>
                     </div>
 
@@ -176,10 +195,99 @@
                                 <img src="assets/icon/Streamlit.svg" alt="Streamlit Icon" class="skill-icon" />
                                 <span>Streamlit</span>
                             </div>
-                            <div class="skill-card-item" style="visibility: hidden; padding: 0;"></div>
                         </div>
                     </div>
                     
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <div class="section__inner">
+                <h2 class="section__title">Projects</h2>
+                <p class="section__subtitle">실제 서비스 수준으로 구현한 프로젝트들을 소개합니다.</p>
+
+                <div class="projects">
+                    <article class="project-card project-card--featured">
+                        <div class="project-card__header">
+                            <h3 class="project-card__title">Hangle Project</h3>
+                            <span class="project-badge">Team Project</span>
+                        </div>
+                        <p class="project-card__summary">
+                            <strong>AI·데이터 경진대회 플랫폼</strong> - 사용자가 데이터셋을 다운로드하고, 머신러닝 모델을 학습한 후 예측 결과(CSV)를 제출하면 서버에서 자동으로 채점하여 리더보드에 등록하는 풀스택 플랫폼입니다.
+                        </p>
+                        
+                        <div class="project-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔐</span>
+                                <div class="feature-content">
+                                    <strong>인증 시스템</strong>
+                                    <p>JWT + OAuth2 (Google, Kakao, Naver) + Redis 기반 세션 관리</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <div class="feature-content">
+                                    <strong>대회 & 채점</strong>
+                                    <p>Python 스크립트 기반 자동 채점 (F1, AUC, RMSE, MAE, Accuracy)</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <div class="feature-content">
+                                    <strong>리더보드</strong>
+                                    <p>실시간 순위 갱신 및 대회별 랭킹 시스템</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤖</span>
+                                <div class="feature-content">
+                                    <strong>AI 챗봇</strong>
+                                    <p>Ollama 기반 LLM 챗봇 + RAG 문서 검색</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-tech-stack">
+                            <div class="tech-category">
+                                <span class="tech-label">Frontend</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">React 18</span>
+                                    <span class="tech-tag">Axios</span>
+                                    <span class="tech-tag">SCSS</span>
+                                </div>
+                            </div>
+                            <div class="tech-category">
+                                <span class="tech-label">Backend</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Spring Boot 3</span>
+                                    <span class="tech-tag">JPA</span>
+                                    <span class="tech-tag">Spring Security</span>
+                                </div>
+                            </div>
+                            <div class="tech-category">
+                                <span class="tech-label">Database</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">MySQL 8</span>
+                                    <span class="tech-tag">Redis</span>
+                                </div>
+                            </div>
+                            <div class="tech-category">
+                                <span class="tech-label">DevOps</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Docker Compose</span>
+                                    <span class="tech-tag">Nginx</span>
+                                    <span class="tech-tag">Jenkins</span>
+                                    <span class="tech-tag">AWS EC2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-links">
+                            <a href="https://www.hangle.store" target="_blank" class="btn-link btn-link--primary">Live Demo</a>
+                            <a href="https://github.com/Doidoria/Hangle-PROJECT" target="_blank" class="btn-link">GitHub</a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -191,7 +299,7 @@
 
                 <div class="contact-grid">
 
-                    <a href="#" class="contact-card" data-copy="01057119170">
+                    <a href="tel:01057119170" class="contact-card" data-copy="01057119170" aria-label="전화번호 복사">
                         <div class="contact-icon-wrapper">
                             <img src="assets/icon/phone.svg" alt="Phone Icon" class="contact-icon" />
                         </div>
@@ -199,7 +307,7 @@
                         <p class="contact-card__detail">010 5711 9170</p>
                     </a>
 
-                    <a href="#" class="contact-card" data-copy="mygodiscat@naver.com">
+                    <a href="mailto:mygodiscat@naver.com" class="contact-card" data-copy="mygodiscat@naver.com" aria-label="이메일 주소 복사">
                         <div class="contact-icon-wrapper">
                             <img src="assets/icon/mail.svg" alt="Email Icon" class="contact-icon" />
                         </div>

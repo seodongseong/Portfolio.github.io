@@ -2,47 +2,396 @@
 
 .section__title { 
     font-family: var(--font-serif);
-    font-size: 28px; 
+    font-size: 24px; 
     letter-spacing: 0.1em; 
     text-transform: uppercase; 
-    margin-bottom: 10px; 
+    margin-bottom: 8px; 
     font-weight: 700;
 }
-.section__subtitle { font-size:15px; color:var(--color-text-muted); max-width:640px; line-height:1.6; margin-bottom:20px; }
+.section__subtitle { font-size:14px; color:var(--color-text-muted); max-width:640px; line-height:1.5; margin-bottom:16px; }
 
 #about { background: var(--color-bg-about); }
-#profile { background: var(--color-bg-about); }
+#profile { background: var(--color-bg-profile); }
 #skills { background: var(--color-bg-skills); }
 #projects { background: var(--color-bg-projects); }
 #contact { background: var(--color-bg-contact); }
 
-.profile-grid { display:grid; grid-template-columns: 320px 1fr; gap:36px; align-items:center; }
+/* 섹션 등장 애니메이션 - 초기 상태 */
+.section {
+    opacity: 1;
+}
+
+/* About 섹션 */
+#about {
+    opacity: 1;
+}
+
+/* Profile 섹션 */
+#profile {
+    opacity: 1;
+}
+
+/* Skills 섹션 */
+#skills {
+    opacity: 1;
+}
+
+/* Projects 섹션 */
+#projects {
+    opacity: 1;
+}
+
+/* Contact 섹션 */
+#contact {
+    opacity: 1;
+}
+
+/* 섹션 내부 요소 */
+.section__inner {
+    opacity: 1;
+}
+
+/* 섹션 타이틀과 서브타이틀 */
+.section__title {
+    opacity: 1;
+}
+
+.section__subtitle {
+    opacity: 1;
+}
+
+/* 카드 요소들 */
+.about-keywords,
+.profile-grid,
+.skills,
+.projects,
+.contact-grid {
+    opacity: 1;
+}
+
+/* About - 콘텐츠 */
+#about .about-keywords {
+    opacity: 1;
+}
+
+/* Profile 콘텐츠 */
+#profile .profile-grid {
+    opacity: 1;
+}
+
+/* Skills 콘텐츠 */
+#skills .skills {
+    opacity: 1;
+}
+
+/* Projects 콘텐츠 */
+#projects .projects {
+    opacity: 1;
+}
+
+/* Contact 그리드 */
+#contact .contact-grid {
+    opacity: 1;
+}
+
+.profile-grid { display:grid; grid-template-columns: 320px 1fr; gap:48px; align-items:center; }
+.profile-photo {
+    position: relative;
+}
+.profile-photo::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: -12px;
+    bottom: -12px;
+    border: 2px solid var(--color-accent-gold);
+    border-radius: 6px;
+    z-index: -1;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+.profile-photo:hover::after {
+    opacity: 0.6;
+}
 .profile-photo img { 
     width:100%; 
     height:auto; 
     border-radius: 6px;
     object-fit:cover; 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
 }
-.profile-info .profile-list { list-style:none; padding:0; margin:0 0 12px 0; color:#333; }
-.profile-list li { margin-bottom:8px; }
+.profile-photo:hover img {
+    transform: translate(-4px, -4px);
+}
+.profile-info .profile-list { 
+    list-style:none; 
+    padding:0; 
+    margin:0 0 20px 0; 
+    color:#333;
+}
+.profile-list li { 
+    margin-bottom:12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border-soft);
+    transition: padding-left 0.2s ease;
+}
+.profile-list li:hover {
+    padding-left: 4px;
+}
+.profile-list li:last-child {
+    border-bottom: none;
+}
+.profile-list strong {
+    display: inline-block;
+    min-width: 80px;
+    color: var(--color-accent-gold);
+    font-weight: 600;
+}
+.profile-desc {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(198, 163, 90, 0.05);
+    border-left: 3px solid var(--color-accent-gold);
+    border-radius: 4px;
+    line-height: 1.7;
+    color: var(--color-text-main);
+}
 
-/* Skills 섹션의 카테고리별 컬럼 배치 활성화 */
+/* Skills 섹션을 일렬로 배치 (한 뷰포트에 모두 표시) */
 .skills { 
-    display: flex; /* 💡추가: 컬럼 레이아웃 재활성화 */
-    gap:32px; 
-    flex-wrap:wrap; 
-    margin-top:12px; 
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 } 
-.skills__column { flex:1; min-width:220px; }
-.skills__title { font-family: var(--font-serif); font-size:18px; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:12px; font-weight: 700; }
+.skills__column { 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    max-height: 500px;
+    overflow: hidden;
+}
+.skills__column:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-accent-gold);
+}
+.skills__title { 
+    font-family: var(--font-serif); 
+    font-size: 14px; 
+    letter-spacing: 0.05em; 
+    text-transform: uppercase; 
+    margin-bottom: 12px; 
+    font-weight: 700;
+    color: var(--color-text-main);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--color-accent-gold);
+}
 .skills__list li { margin-bottom: 6px; line-height: 1.5; } 
 
-.projects { display:flex; flex-direction:column; gap:18px; margin-top:12px; }
-.project-card { border-top:1px solid #d9cfbf; border-bottom:1px solid #e5ddce; padding:24px 0; }
-.project-card__title { font-family: var(--font-main); font-size: 18px; font-weight: 600; margin-bottom: 8px;}
-.project-card__summary { margin-bottom: 8px; line-height: 1.5; }
-.project-links { margin-top: 16px; }
+/* About 섹션 스타일 - 미니멀 디자인 */
+.about-section {
+    text-align: center;
+    max-width: 700px;
+}
+
+.about-intro {
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+
+.about-intro__text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    margin: 0;
+}
+
+.about-intro__text strong {
+    color: var(--color-accent-gold);
+    font-weight: 600;
+}
+
+.about-keywords {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.keyword-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-radius: 6px;
+    border-left: 3px solid var(--color-accent-gold);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.keyword-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.keyword-icon {
+    color: var(--color-accent-gold);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.keyword-text {
+    font-size: 14px;
+    color: var(--color-text-main);
+    line-height: 1.4;
+}
+
+.projects { display:flex; flex-direction:column; gap:24px; margin-top:24px; }
+.project-card { 
+    background: #ffffff;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+.project-card--featured {
+    border-left: 3px solid var(--color-accent-gold);
+}
+.project-card::before {
+    display: none;
+}
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-accent-gold);
+}
+
+/* Project Card Header */
+.project-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.project-badge {
+    background: var(--color-accent-gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.project-card__title { 
+    font-family: var(--font-serif); 
+    font-size: 18px; 
+    font-weight: 700; 
+    margin-bottom: 0;
+    letter-spacing: 0.05em;
+    color: var(--color-text-main);
+}
+.project-card__summary { 
+    margin-bottom: 16px; 
+    line-height: 1.6; 
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+.project-card__summary strong {
+    color: var(--color-accent-gold);
+}
+
+/* Project Features */
+.project-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    background: var(--color-bg-skills);
+    border-radius: 6px;
+}
+.feature-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.feature-content strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-main);
+    margin-bottom: 2px;
+}
+.feature-content p {
+    margin: 0;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+}
+
+/* Project Tech Stack */
+.project-tech-stack {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.tech-category {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.tech-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.tech-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    background: var(--color-bg-skills);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--color-text-main);
+    transition: all 0.2s ease;
+}
+.tech-tag:hover {
+    background: var(--color-accent-gold);
+    color: #fff;
+    border-color: var(--color-accent-gold);
+}
+.project-links { margin-top: 20px; }
 
 .contact-grid {
     display: grid;
@@ -55,18 +404,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px 15px;
-    background-color: #ffffff; /* 흰색 배경 */
+    padding: 32px 20px;
+    background-color: #ffffff;
     border-radius: 8px;
     text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease,
+                border-color 0.3s ease,
+                transform 0.3s ease;
+}
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(198, 163, 90, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+.contact-card:hover::before {
+    left: 100%;
 }
 
 /* 호버 효과: 살짝 떠오르는 느낌 */
 .contact-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(198, 163, 90, 0.15);
+    transform: translateY(-5px);
+    border-color: var(--color-accent-gold);
 }
 
 /* 아이콘을 감싸는 원형 배경 */
@@ -76,10 +444,16 @@
     justify-content: center;
     width: 70px;
     height: 70px;
-    background-color: var(--color-accent-gold); /* 골드 강조색 사용 */
+    background-color: var(--color-accent-gold);
     border-radius: 50%;
     margin-bottom: 15px;
     flex-shrink: 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.contact-card:hover .contact-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 4px 12px rgba(198, 163, 90, 0.3);
 }
 
 /* 아이콘 크기 (SVG 또는 이미지) */
@@ -118,18 +492,50 @@
 
 @media (max-width: 500px) {
     .contact-grid {
-        grid-template-columns: 1fr; /* 모바일: 1개 컬럼 */
-        gap: 15px;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .contact-card {
+        padding: 20px 16px;
+    }
+    .skills__card-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .skill-card-item {
+        min-height: 80px;
+        padding: 12px 8px;
+    }
+    .skill-card-item .skill-icon {
+        width: 28px;
+        height: 28px;
+        margin-bottom: 6px;
+    }
+    .skill-card-item .skill-text-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+    .skill-card-item > span:not(.skill-text-icon) {
+        font-size: 11px;
+    }
+    .project-card__tech {
+        gap: 6px;
+    }
+    .tech-tag {
+        font-size: 11px;
+        padding: 3px 10px;
     }
 }
 
 .btn-link {
     display: inline-block;
-    padding: 8px 18px;
+    padding: 6px 14px;
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: #333;
     transition: all 0.2s;
@@ -139,10 +545,102 @@
     color: #fff;
     border-color: #333;
 }
+.btn-link--primary {
+    background: var(--color-accent-gold);
+    border-color: var(--color-accent-gold);
+    color: #fff;
+}
+.btn-link--primary:hover {
+    background: #b8943d;
+    border-color: #b8943d;
+}
+.project-links {
+    display: flex;
+    gap: 10px;
+}
 
 @media (max-width: 768px) {
-    .profile-grid { grid-template-columns: 1fr; text-align: center; }
+    .profile-grid { 
+        grid-template-columns: 1fr; 
+        text-align: center; 
+        gap: 32px;
+    }
     .profile-photo { max-width: 200px; margin: 0 auto; }
+    .profile-photo::after {
+        display: none;
+    }
+    .section__title {
+        font-size: 24px;
+    }
+    .section__subtitle {
+        font-size: 14px;
+    }
+    .about-intro__text {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+    .keyword-item {
+        padding: 10px 14px;
+    }
+    .keyword-text {
+        font-size: 13px;
+    }
+    .project-card {
+        padding: 20px;
+    }
+    .project-card__title {
+        font-size: 16px;
+    }
+    .project-card__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .project-features {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .project-tech-stack {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .feature-item {
+        padding: 10px;
+    }
+    .feature-content strong {
+        font-size: 11px;
+    }
+    .feature-content p {
+        font-size: 10px;
+    }
+    .skills {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        max-width: 100%;
+    }
+    .skills__column {
+        max-height: none;
+    }
+    @media (max-width: 640px) {
+        .skills {
+            grid-template-columns: 1fr;
+        }
+    }
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .contact-card {
+        padding: 24px 16px;
+    }
+    .contact-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+    .contact-icon {
+        width: 28px;
+        height: 28px;
+    }
 }
 
 /* [START] --- Skills Icon Layout (수정된 1/4 크기, 카테고리 분리) --- */
@@ -156,65 +654,82 @@
     display: grid;
     /* 카테고리 컬럼 내부에서 2열 그리드로 카드를 표시 */
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px; /* 카드 간 간격 축소 */
-    margin-top: 10px;
+    gap: 8px;
+    flex: 1;
+    align-content: start;
 }
 
-/* 개별 스킬 카드 스타일 정의 (NEW - 1/4 size) */
+/* 개별 스킬 카드 스타일 정의 */
 .skill-card-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8px 5px; /* 패딩 축소 */
-    background-color: #ffffff;
+    padding: 10px 8px;
+    background-color: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--color-border-soft);
-    border-radius: 4px;
+    border-radius: 6px;
     text-align: center;
-    transition: all 0.2s ease;
-    height: 60px; /* 카드 높이 축소 (대폭) */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+    min-height: 70px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
 }
 
 /* 호버 효과 */
 .skill-card-item:hover {
-    background-color: var(--color-bg-contact);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: rgba(198, 163, 90, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(198, 163, 90, 0.2);
+    border-color: var(--color-accent-gold);
 }
 
-/* 아이콘 크기 재정의 (12.5px = 50px의 1/4) */
+/* 아이콘 크기 통일 및 가시성 개선 */
 .skill-card-item .skill-icon {
-    width: 12.5px;
-    height: 12.5px;
-    margin: 0 0 3px 0; /* 여백 축소 */
+    width: 28px;
+    height: 28px;
+    margin: 0 0 6px 0;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+    object-fit: contain;
+}
+.skill-card-item:hover .skill-icon {
+    transform: scale(1.1);
 }
 
-/* 텍스트 아이콘 스타일 재정의 (12.5px에 맞춤) */
+/* 텍스트 아이콘 스타일 통일 및 가시성 개선 */
 .skill-card-item .skill-text-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 12.5px;
-    height: 12.5px;
+    width: 28px;
+    height: 28px;
     line-height: 1;
-    font-size: 8px; /* 폰트 크기 대폭 축소 */
-    margin: 0 0 3px 0;
-    /* 기타 스타일 유지 */
-    background-color: #e0e0e0;
-    border-radius: 2px;
+    font-size: 10px;
+    margin: 0 0 6px 0;
+    background-color: var(--color-accent-gold);
+    border-radius: 4px;
     font-weight: bold;
-    color: #555;
+    color: #fff;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+.skill-card-item:hover .skill-text-icon {
+    transform: scale(1.1);
 }
 
 /* 스킬 이름 텍스트 스타일 */
-.skill-card-item span {
-    font-size: 11px; /* 텍스트 크기 축소 */
+.skill-card-item > span:not(.skill-text-icon) {
+    font-size: 11px;
     font-weight: 500;
     color: var(--color-text-main);
     max-width: none;
     word-break: normal;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+}
+.skill-card-item:hover > span:not(.skill-text-icon) {
+    color: var(--color-accent-gold);
+    font-weight: 600;
 }
 /* [END] --- Skills Icon Layout (수정된 1/4 크기, 카테고리 분리) --- */

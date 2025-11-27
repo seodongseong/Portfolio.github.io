@@ -1,128 +1,211 @@
 // assets/js/main.js
 (function () {
-  const container = document.querySelector('.snap-container');
-  const sections = Array.from(document.querySelectorAll('.section, .hero, .footer'));
-  const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+  const snapContainerElement = document.querySelector('.snap-container');
+  const allSectionElements = Array.from(document.querySelectorAll('.section, .hero, .footer'));
+  const navigationLinkElements = Array.from(document.querySelectorAll('.nav-link'));
+  const siteHeaderElement = document.querySelector('.site-header');
+  const scrollIndicatorBarElement = document.querySelector('.scroll-indicator__bar');
 
-  let isScrolling = false;
-  let scrollTimeout = null;
+  let isCurrentlyScrolling = false;
+  let scrollAnimationTimeoutId = null;
 
   // 현재 뷰포트 상단 근처(헤더 아래)에 있는 섹션의 인덱스를 찾습니다.
-  function getCurrentIndex() {
-    return sections.findIndex(sec => {
-      const rect = sec.getBoundingClientRect();
+  function findCurrentActiveSectionIndex() {
+    return allSectionElements.findIndex(sectionElement => {
+      const sectionBoundingRect = sectionElement.getBoundingClientRect();
       // 섹션의 뷰포트 내 상단 경계가 뷰포트의 상단(0)에서 64px(헤더 높이) 이내에 있을 때 활성화
-      return rect.top <= 64 && rect.bottom > 64;
+      return sectionBoundingRect.top <= 64 && sectionBoundingRect.bottom > 64;
     });
   }
 
-  function scrollToSection(index) {
-    if (index < 0 || index >= sections.length) return;
+  function scrollToTargetSectionByIndex(targetSectionIndex) {
+    if (targetSectionIndex < 0 || targetSectionIndex >= allSectionElements.length) return;
 
     // 이미 스크롤 중이라면 함수를 종료합니다.
-    if (isScrolling) return;
+    if (isCurrentlyScrolling) return;
 
-    isScrolling = true;
-    sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    isCurrentlyScrolling = true;
+    allSectionElements[targetSectionIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // 스크롤 완료 후 isScrolling을 false로 설정합니다.
-    clearTimeout(scrollTimeout);
-    // 스크롤 애니메이션 시간을 고려하여 700ms 후 isScrolling 해제
-    scrollTimeout = setTimeout(() => { isScrolling = false; }, 700);
+    // 스크롤 완료 후 isCurrentlyScrolling을 false로 설정합니다.
+    clearTimeout(scrollAnimationTimeoutId);
+    // 스크롤 애니메이션 시간을 고려하여 700ms 후 isCurrentlyScrolling 해제
+    scrollAnimationTimeoutId = setTimeout(() => { isCurrentlyScrolling = false; }, 700);
+  }
+
+  // 스크롤 진행률을 계산하여 인디케이터 업데이트
+  function updateScrollProgressIndicator() {
+    if (!scrollIndicatorBarElement || !snapContainerElement) return;
+
+    const containerScrollTop = snapContainerElement.scrollTop;
+    const containerScrollHeight = snapContainerElement.scrollHeight;
+    const containerClientHeight = snapContainerElement.clientHeight;
+    const totalScrollableDistance = containerScrollHeight - containerClientHeight;
+    
+    if (totalScrollableDistance > 0) {
+      const scrollProgressPercentage = (containerScrollTop / totalScrollableDistance) * 100;
+      scrollIndicatorBarElement.style.width = `${scrollProgressPercentage}%`;
+    }
+  }
+
+  // 헤더 스크롤 효과 적용
+  function updateHeaderScrollState() {
+    if (!siteHeaderElement) return;
+
+    const scrollTop = snapContainerElement.scrollTop;
+    if (scrollTop > 50) {
+      siteHeaderElement.classList.add('scrolled');
+    } else {
+      siteHeaderElement.classList.remove('scrolled');
+    }
   }
 
   // 휠 이벤트 리스너 (데스크톱 휠 스크롤 제어)
-  container.addEventListener('wheel', (e) => {
+  snapContainerElement.addEventListener('wheel', (wheelEvent) => {
     // 스크롤 중이거나 휠 이동량이 너무 작을 경우 이벤트를 중지하고 무시합니다.
-    if (isScrolling || Math.abs(e.deltaY) < 10) {
-      e.preventDefault();
+    if (isCurrentlyScrolling || Math.abs(wheelEvent.deltaY) < 10) {
+      wheelEvent.preventDefault();
       return;
     }
 
     // 마우스 휠 기본 동작 방지 (섹션 단위 스크롤을 위해)
-    e.preventDefault();
+    wheelEvent.preventDefault();
 
-    const currentIndex = getCurrentIndex();
+    const currentActiveSectionIndex = findCurrentActiveSectionIndex();
 
-    if (e.deltaY > 0) { // 아래로 스크롤
-      scrollToSection(currentIndex + 1);
+    if (wheelEvent.deltaY > 0) { // 아래로 스크롤
+      scrollToTargetSectionByIndex(currentActiveSectionIndex + 1);
     }
-    else if (e.deltaY < 0) { // 위로 스크롤
-      scrollToSection(currentIndex - 1);
+    else if (wheelEvent.deltaY < 0) { // 위로 스크롤
+      scrollToTargetSectionByIndex(currentActiveSectionIndex - 1);
     }
   }, { passive: false }); // preventDefault()를 위해 passive: false 설정
 
+  // 스크롤 이벤트 리스너 (인디케이터 및 헤더 업데이트)
+  snapContainerElement.addEventListener('scroll', () => {
+    updateScrollProgressIndicator();
+    updateHeaderScrollState();
+  });
+
 
   // 네비게이션 링크 클릭 이벤트
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('data-target');
-      const targetEl = document.getElementById(targetId);
+  navigationLinkElements.forEach(navigationLinkElement => {
+    navigationLinkElement.addEventListener('click', (clickEvent) => {
+      clickEvent.preventDefault();
+      const targetSectionId = navigationLinkElement.getAttribute('data-target');
+      const targetSectionElement = document.getElementById(targetSectionId);
 
-      if (targetEl) {
+      if (targetSectionElement) {
         // 클릭 시에도 smooth scroll을 적용
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        targetSectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
 
-  // Intersection Observer (활성 섹션 하이라이트)
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(a => {
-          const target = a.getAttribute('data-target');
-          if (target === id || (id === 'top' && target === 'top')) {
-            a.classList.add('active');
+  // Intersection Observer (활성 섹션 하이라이트 및 애니메이션)
+  const intersectionObserverForActiveSection = new IntersectionObserver((intersectionObserverEntries) => {
+    intersectionObserverEntries.forEach(intersectionObserverEntry => {
+      if (intersectionObserverEntry.isIntersecting) {
+        const activeSectionElement = intersectionObserverEntry.target;
+        const activeSectionId = activeSectionElement.id;
+        
+        // 네비게이션 활성화
+        navigationLinkElements.forEach(navigationLinkElement => {
+          const linkTargetSectionId = navigationLinkElement.getAttribute('data-target');
+          if (linkTargetSectionId === activeSectionId || (activeSectionId === 'top' && linkTargetSectionId === 'top')) {
+            navigationLinkElement.classList.add('active');
           } else {
-            a.classList.remove('active');
+            navigationLinkElement.classList.remove('active');
           }
         });
+        
+        // 섹션 애니메이션 활성화
+        if (activeSectionElement.classList.contains('section')) {
+          activeSectionElement.classList.add('animate-in');
+        }
       }
     });
   }, {
-    root: container,
+    root: snapContainerElement,
     // 헤더(64px) 아래를 기준으로 판단하도록 rootMargin 설정
     // 뷰포트의 상단 64px을 제외한 영역이 'top'에 해당하는 경계가 됩니다.
-    rootMargin: '-64px 0px 0px 0px',
-    // 섹션 시작점이 헤더 아래에 도달했을 때 활성화되도록 threshold를 0.1로 낮춥니다.
-    threshold: 0.1
+    rootMargin: '-64px 0px -20% 0px',
+    // 섹션이 뷰포트에 일정 부분 들어왔을 때 활성화
+    threshold: 0.15
   });
 
-  sections.forEach(s => {
-    if (s.id) io.observe(s);
+  allSectionElements.forEach(sectionElement => {
+    if (sectionElement.id) intersectionObserverForActiveSection.observe(sectionElement);
   });
+  
+  // Hero 섹션은 즉시 애니메이션 실행
+  const heroSectionElement = document.querySelector('.hero');
+  if (heroSectionElement) {
+    setTimeout(() => {
+      heroSectionElement.classList.add('animate-in');
+    }, 100);
+  }
+
+  // 초기 로드 시 이미 보이는 섹션에 애니메이션 적용
+  function initializeVisibleSections() {
+    allSectionElements.forEach(sectionElement => {
+      if (sectionElement.classList.contains('section')) {
+        const sectionBoundingRect = sectionElement.getBoundingClientRect();
+        const isVisible = sectionBoundingRect.top < window.innerHeight && sectionBoundingRect.bottom > 0;
+        if (isVisible) {
+          sectionElement.classList.add('animate-in');
+        }
+      }
+    });
+  }
 
   // URL 해시(#about 등) 처리 로직
   window.addEventListener('load', () => {
+    // 초기 로드 시 스크롤 인디케이터 및 헤더 상태 업데이트
+    updateScrollProgressIndicator();
+    updateHeaderScrollState();
+    
+    // 초기 로드 시 보이는 섹션에 애니메이션 적용
+    setTimeout(() => {
+      initializeVisibleSections();
+    }, 300);
+    
     if (location.hash) {
-      const id = location.hash.replace('#', '');
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const targetSectionIdFromHash = location.hash.replace('#', '');
+      const targetSectionElementFromHash = document.getElementById(targetSectionIdFromHash);
+      if (targetSectionElementFromHash) {
+        targetSectionElementFromHash.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 해시로 이동한 섹션에도 애니메이션 적용
+        setTimeout(() => {
+          if (targetSectionElementFromHash.classList.contains('section')) {
+            targetSectionElementFromHash.classList.add('animate-in');
+          }
+        }, 500);
+      }
     }
   });
 
+  // 연락처 카드 클립보드 복사 기능
+  const contactCardElementsWithCopyData = document.querySelectorAll('#contact .contact-card[data-copy]');
 
-  const contactCards = document.querySelectorAll('#contact .contact-card[data-copy]');
-
-  contactCards.forEach(card => {
-    card.addEventListener('click', (e) => {
+  contactCardElementsWithCopyData.forEach(contactCardElement => {
+    contactCardElement.addEventListener('click', (clickEvent) => {
       // 기본 <a> 태그 동작(href="#") 방지
-      e.preventDefault();
+      clickEvent.preventDefault();
 
-      const textToCopy = card.getAttribute('data-copy');
+      const textToCopyToClipboard = contactCardElement.getAttribute('data-copy');
 
-      if (textToCopy && navigator.clipboard) {
+      if (textToCopyToClipboard && navigator.clipboard) {
         // 비동기 복사 API 사용 (가장 권장됨)
-        navigator.clipboard.writeText(textToCopy)
+        navigator.clipboard.writeText(textToCopyToClipboard)
           .then(() => {
             // 사용자에게 피드백 제공
-            alert(`${card.querySelector('.contact-card__title').textContent}이(가) 복사되었습니다: ${textToCopy}`);
+            const contactCardTitleElement = contactCardElement.querySelector('.contact-card__title');
+            const contactCardTitleText = contactCardTitleElement ? contactCardTitleElement.textContent : '정보';
+            alert(`${contactCardTitleText}이(가) 복사되었습니다: ${textToCopyToClipboard}`);
           })
-          .catch(err => {
-            console.error('클립보드 복사 실패:', err);
+          .catch(clipboardError => {
+            console.error('클립보드 복사 실패:', clipboardError);
             alert('복사에 실패했습니다. 콘솔을 확인해주세요.');
           });
       } else {

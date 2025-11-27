@@ -6,11 +6,12 @@
   --color-accent-gold: #c6a35a;
   --color-border-soft: #e0d7c7;
 
-  --color-bg-hero: #faf9f6;
-  --color-bg-about: #f3f0e8;
-  --color-bg-skills: #f7f4ed;
-  --color-bg-projects: #f1eee6;
-  --color-bg-contact: #f7f5f0;
+  --color-bg-hero: #ffffff;
+  --color-bg-about: #f8f6f2;
+  --color-bg-profile: #f5f2ed;
+  --color-bg-skills: #faf7f2;
+  --color-bg-projects: #f7f4ef;
+  --color-bg-contact: #f9f6f1;
 
   --font-main: "Inter", system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
@@ -31,23 +32,95 @@ body {
 a { color: inherit; text-decoration: none; }
 
 /* ----------------------------------------------- */
-/* [추가] 로고 애니메이션 */
+/* 스크롤 인디케이터 */
 /* ----------------------------------------------- */
-@keyframes logo-slide-down {
-    0% { transform: translateY(-20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+.scroll-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 1001;
+    background: rgba(198, 163, 90, 0.1);
+    pointer-events: none;
+}
+
+.scroll-indicator__bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-accent-gold), #d4b876);
+    transition: width 0.1s ease-out;
 }
 /* ----------------------------------------------- */
 
 
 .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-.site-header { position: fixed; top: 0; left: 0; right: 0; z-index:1000; background: transparent; }
+.site-header { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    z-index:1000; 
+    background: transparent;
+}
+.site-header.scrolled {
+    background: transparent;
+}
 .header-inner { display:flex; align-items:center; justify-content:space-between; height:64px; }
-.site-nav .nav-link { margin-left:18px; font-size:14px; color:var(--color-text-main); opacity:0.85; }
+.site-nav .nav-link { 
+    margin-left:18px; 
+    font-size:14px; 
+    color:var(--color-text-main); 
+    opacity:0.85;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .site-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .site-nav .nav-link {
+        margin-left: 0;
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+    .logo {
+        font-size: 16px;
+    }
+    .header-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 0;
+    }
+}
+.site-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-accent-gold);
+    transition: width 0.3s ease;
+}
+.site-nav .nav-link:hover {
+    opacity: 1;
+}
+.site-nav .nav-link:hover::after,
+.site-nav .nav-link.active::after {
+    width: 100%;
+}
 .site-nav .nav-link.active { color:var(--color-accent-gold); font-weight:600; opacity:1; }
 .logo { 
     font-family: var(--font-serif); 
     font-weight:700; 
     letter-spacing:0.05em; 
     font-size: 20px;
+    transition: color 0.3s ease;
+}
+.logo:hover {
+    color: var(--color-accent-gold);
 }
